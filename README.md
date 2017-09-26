@@ -47,9 +47,15 @@ In this page the user will see the username of the other, and all the messages s
 
 ## Tech actions
 
-* Set up docker container with Apache and PHP
-* Install Silex application as a docker volume
+* Project set up
+    * Docker coontainer with Apache and PHP
+    * Silex application as a docker volume
+    * Script to link thee application and database containers depending on environment
 * Define database schema
+    * User table: ID (unique key, aut-increment, not null), username (unique, not null), createdAt (dateTime, not null)
+    * Chat table: ID (unique key, aut-increment, not null), user1Id (foreign key), user2Id (foreign key), createdAt (dateTime not null)
+        * a user can have many chats (one-to-many), but a chat always have 2 users (one-to-two?)(we are not doing group chats)
+    * Message table: ID (unique key, aut-increment, not null), chatId (foreign key), createdAt (dateTime not null)
 * Implement endpoints to:
     * Check if user exists by username
     * Create new user with username
@@ -65,3 +71,10 @@ In this page the user will see the username of the other, and all the messages s
     * Before submitting the new chat form, AJAX call to check if the user exists (nice to have; also in the backend)
     * AJAX call to send the new message
     * Automatic update of messages
+    
+*Note on urls: Since there will not be authentication nor authorzation, the applicatioon will not keep a user session. Therefore, the URLs will follow a RESTful approach:*
+
+* /login (login page)
+* /{username}/dashboard (dashboard page for a specific user)
+* /{username}/chat/{chatId} (chat page for a specific chat of a specific user)
+    
