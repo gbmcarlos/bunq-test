@@ -50,18 +50,18 @@ In this page the user will see the username of the other, and all the messages s
 * Set up docker container with Apache and PHP
 * Install Silex application as a docker volume
 * Define database schema
-* Implement services/queries to:
-    * Create new user
-    * Retrieve list of existing chats for a user
+* Implement endpoints to:
+    * Check if user exists by username
+    * Create new user with username
+    * Retrieve list of existing chats for a user, each with the last message
     * Retrieve list of messages for a chat
     * Send new message
-* Implement controllers for:
-    * Login (redirect to user's dashboard and, optionally, create new user)
-    * Dashboard (retrieve list of chats and create new chat)
-    * Chat (retrieve messages, update messages, send new message)
 * Implement templates
-* Implement front-end login:
-    * Validation and submit of the login form
-    * Validation for the new chat form
-    * Validation for the new message form
+    * Login: form with text box and submit button
+    * Dashboard: list iterating through the chats, form with text box and submit button
+    * Chat: List of messages, send and received differentiated by a class, each with the text and the time, text area and submit button 
+* Implement front-end logic:
+    * Before submitting the login form, check that the username is a valid string
+    * Before submitting the new chat form, AJAX call to check if the user exists (nice to have; also in the backend)
+    * AJAX call to send the new message
     * Automatic update of messages
