@@ -1,5 +1,15 @@
 # Bunq Back End Engineer assignment
 
+## Installation
+
+Run the commands below to install this project.
+
+*Note: You need docker to install the project locally.*
+
+```
+$ ./deploy/up.sh local 80 && docker logs -f chat_app
+```
+
 ## Assignment
 *Write a very simple 'chat' application backend in PHP. A user should be able to send a simple text
 message to another user and a user should be able to get the messages sent to him and the
