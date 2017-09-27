@@ -50,7 +50,6 @@ In this page the user will see the username of the other, and all the messages s
 * Project set up
     * Docker container with Apache and PHP
     * Silex application as a docker volume
-    * Script to get the container up, linking the database
 * Define database schema
     * User table: ID (unique key, aut-increment, not null), username (unique, not null), createdAt (dateTime, not null)
     * Chat table: ID (unique key, aut-increment, not null), user1Id (foreign key), user2Id (foreign key), createdAt (dateTime not null)
