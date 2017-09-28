@@ -7,8 +7,10 @@ Run the commands below to install this project.
 *Note: You need docker to install the project locally.*
 
 ```
-$ ./deploy/up.sh local [port] && docker logs -f chat_app
+$ SQLITEDB_FILE=[db file] ./deploy/up.sh local [port] && docker logs -f chat_app
 ```
+
+*Note: PHP will need premissions to access [db file], e.g. /var/tmp/[file name]*
 
 and visit ```http://[docker ip]:[port]/``` for testing the application.
 
@@ -66,7 +68,7 @@ In this page the user will see the username of the other user, and all the messa
     * User table: ID (unique key, aut-increment, not null), username (unique, not null), createdAt (dateTime, not null)
     * Chat table: ID (unique key, aut-increment, not null), user1Id (foreign key), user2Id (foreign key), createdAt (dateTime not null)
         * a user can have many chats (one-to-many), but a chat always have 2 users (one-to-two?)(we are not doing group chats)
-    * Message table: ID (unique key, aut-increment, not null), chatId (foreign key), createdAt (dateTime not null)
+    * Message table: ID (unique key, aut-increment, not null), chatId (foreign key), text (string, not null), createdAt (dateTime not null)
 * Implement endpoints to:
     * Check if user exists by username
     * Create new user with username
