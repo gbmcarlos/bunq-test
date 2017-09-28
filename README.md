@@ -7,8 +7,10 @@ Run the commands below to install this project.
 *Note: You need docker to install the project locally.*
 
 ```
-$ ./deploy/up.sh local 80 && docker logs -f chat_app
+$ ./deploy/up.sh local [port] && docker logs -f chat_app
 ```
+
+and visit ```http://[docker ip]:[port]/``` for testing the application.
 
 ## Assignment
 *Write a very simple 'chat' application backend in PHP. A user should be able to send a simple text
@@ -27,21 +29,21 @@ libraries; keep in mind though that we love custom-build.*
 #### Login page
 
 In this page the user will have a text box to input the username and a submit button.
-The username can be an string of alphanumeric (no spaces). 
+The username can be an alphanumeric string. 
 
 * When the submit is clicked, the user will be redirected to the dashboard page.
 * If a user with that username does not exists, it will be created.
 
 #### Dashboard page
 
-In this page the user will be shown a list of users we has had messages with (existing chats), and a text box and a button too start new chat.
+In this page the user will be shown a list of users he has had messages with (existing chats), and a text box and a button to start a new chat.
 
 * When one of the existing chats is clicked, the user will be redirected to the chat page with that other user.
 * When the new chat button is clicked, if the textbox contains a valid username, the user will be redirected to a blank chat page.
 
 #### Chat page
 
-In this page the user will see the username of the other, and all the messages sent and received in that chat, with the time they were sent and received; and a text area and a button to send a new message.
+In this page the user will see the username of the other user, and all the messages sent and received in that chat, with the time they were sent and received; and a text area and a button to send a new message.
 
 * When the new message button is clicked, the new message will be sent and it will appear in the list of messages.
 
