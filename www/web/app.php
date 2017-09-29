@@ -25,8 +25,9 @@ $app['DB'] =  function() use ($db) {
     return $db->getPDO();
 };
 
-$app->get('/hello/{name}', function ($name) use ($app, $db) {
-    return var_dump($db->getTableList());
-});
+// Register app service, similar to registering the bundles in the app kernel in symfony
+\App\config\Services::registerServices($app);
+
+$app->get('/login', "FrontController:loginAction");
 
 $app->run();
