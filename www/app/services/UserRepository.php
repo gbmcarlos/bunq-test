@@ -10,13 +10,20 @@ namespace App\services;
  */
 class UserRepository {
 
-    protected $db;
+    protected $pdo;
 
-    public function __construct(\PDO $db) {
-        $this->db = $db;
+    public function __construct(\PDO $pdo) {
+        $this->pdo = $pdo;
     }
 
-    public function checkUserExists($username) {
+    public function checkUserExists($username) : bool {
+
+        $stmt = $this->pdo->prepare('SELECT * FROM user WHERE username = :username');
+        $stmt->bindParam('username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return !empty($result);
 
     }
 

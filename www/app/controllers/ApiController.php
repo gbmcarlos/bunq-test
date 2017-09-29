@@ -10,6 +10,7 @@ namespace App\controllers;
 
 use App\services\ChatRepository;
 use App\services\UserRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ApiController {
@@ -24,7 +25,17 @@ class ApiController {
     }
 
     public function checkUserExists($username, Request $request) {
-        
+
+        try {
+
+            $userExists = $this->userRepo->checkUserExists($username);
+
+            return new JsonResponse($userExists);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
+
     }
 
     public function createNewUser(Request $request) {
