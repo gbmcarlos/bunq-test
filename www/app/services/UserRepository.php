@@ -27,7 +27,21 @@ class UserRepository {
 
     }
 
-    public function createNewUser($username) {
+    public function createNewUser($data) : bool {
+
+        $now = (new \DateTime())->getTimestamp();
+
+        $stmt = $this->pdo->prepare("INSERT INTO user(username, createdAt) VALUES (:username, :now)");
+        if (!$stmt) {
+            return $this->pdo->errorInfo();
+        }
+        $stmt->bindParam('username', $data['username']);
+        $stmt->bindParam('now', $now);
+        $stmt->execute();
+
+        $result = $stmt->rowCount() == 1;
+
+        return $result;
 
     }
 

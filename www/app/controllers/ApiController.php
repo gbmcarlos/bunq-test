@@ -40,6 +40,16 @@ class ApiController {
 
     public function createNewUser(Request $request) {
 
+        try {
+
+            $result = $this->userRepo->createNewUser($request->request->all());
+
+            return new JsonResponse($result);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
+
     }
 
     public function getUserChats($username, Request $request) {
