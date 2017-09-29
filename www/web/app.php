@@ -28,6 +28,8 @@ $app['DB'] = function () use ($db) {
 // Register app service, similar to registering the bundles in the app kernel in symfony
 \App\config\Services::registerServices($app);
 
-App\config\Routing::registerRoutes($app);
+\App\config\Routing::registerRoutes($app);
+
+\App\config\Middleware::registerMiddlewares($app);
 
 $app->run();
