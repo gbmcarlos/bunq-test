@@ -16,12 +16,20 @@ class UserRepository {
         $this->pdo = $pdo;
     }
 
-    public function checkUserExists($username) : bool {
+    public function getUser($username) {
 
         $stmt = $this->pdo->prepare('SELECT * FROM user WHERE username = :username');
         $stmt->bindParam('username', $username);
         $stmt->execute();
+
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function checkUserExists($username) : bool {
+
+        $result = $this->getUser($username);
 
         return !empty($result);
 

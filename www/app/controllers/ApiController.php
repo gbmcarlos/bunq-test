@@ -52,6 +52,29 @@ class ApiController {
 
     }
 
+    public function createNewChat($username, $username2, Request $request) {
+
+        try {
+
+            $user1 = $this->userRepo->getUser($username);
+            $user2 = $this->userRepo->getUser($username2);
+
+            if ($user1 && $user2) {
+
+                $result = $this->chatRepo->createNewChat($user1['id'], $user2['id']);
+
+                return new JsonResponse($result);
+
+            } else {
+                return new JsonResponse(false);
+            }
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
+
+    }
+
     public function getUserChats($username, Request $request) {
 
     }
