@@ -6,7 +6,7 @@
  * Time: 5:07 AM
  */
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Create app
 $app = new Silex\Application();
@@ -17,11 +17,11 @@ $app['debug'] = getenv('APP_DEBUG');
 // Set up db connections and set schema
 $db = new DB\SQLiteDatabase();
 $db->connect(getenv('SQLITEDB_FILE'));
-$schema = require_once(__DIR__.'/../db/schema.php');
+$schema = require_once(__DIR__ . '/../db/schema.php');
 $db->create($schema);
 
 // Register db in the service container
-$app['DB'] =  function() use ($db) {
+$app['DB'] = function () use ($db) {
     return $db->getPDO();
 };
 
