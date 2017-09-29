@@ -10,4 +10,22 @@ namespace App\services;
  */
 class ChatRepository {
 
+    protected $db;
+
+    public function __construct(\PDO $db) {
+        $this->db = $db;
+    }
+
+    public function getMessages($chatId) {
+
+    }
+
+    public function getMessagesSince($chatId, $lastMessageId) {
+
+    }
+
+    public function saveNewMessage($chatId, $text) {
+
+    }
+
 }

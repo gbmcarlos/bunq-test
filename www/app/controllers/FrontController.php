@@ -18,21 +18,21 @@ class FrontController {
 
     protected $chatRepo;
 
-    public function ___construct(UserRepository $userRepository, ChatRepository $chatRepository) {
+    public function __construct(UserRepository $userRepository, ChatRepository $chatRepository) {
         $this->userRepo = $userRepository;
         $this->chatRepo = $chatRepository;
     }
 
     public function loginAction(Request $request) {
-        return 'Hello world';
+        return 'Hello login';
     }
 
-    public function dashboard($username, Request $request) {
-
+    public function dashboardAction($username, Request $request) {
+        return 'Hello dashboard, username: ' . $username;
     }
 
-    public function chat($username, $chatId, Request $request) {
-
+    public function chatAction($username, $chatId, Request $request) {
+        return 'Hello chat, username: ' . $username . ', chatId: ' . $chatId;
     }
 
 }

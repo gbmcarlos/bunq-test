@@ -12,7 +12,19 @@ class UserRepository {
 
     protected $db;
 
-    public function __construct($db) {
+    public function __construct(\PDO $db) {
+        $this->db = $db;
+    }
+
+    public function checkUserExists($username) {
+
+    }
+
+    public function createNewUser($username) {
+
+    }
+
+    public function getUserChats($username) {
 
     }
 

@@ -15,6 +15,8 @@ class Routing {
     public static function registerRoutes(Application $app) {
 
         $app->get('/login', "FrontController:loginAction");
+        $app->get('/{username}/dashboard', "FrontController:dashboardAction");
+        $app->get('/{username}/chat/{chatId}', "FrontController:chatAction");
 
     }
 
