@@ -8,6 +8,7 @@ use App\services\ChatRepository;
 use App\services\UserRepository;
 use Silex\Application;
 use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\TwigServiceProvider;
 
 /**
  * Created by PhpStorm.
@@ -46,6 +47,10 @@ class Services {
                 $app['ChatRepository']
             );
         };
+
+        $app->register(new TwigServiceProvider(), array(
+            'twig.path' => __DIR__.'/../resources/templates',
+        ));
 
     }
 
