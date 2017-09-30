@@ -9,6 +9,7 @@ use App\services\UserRepository;
 use Silex\Application;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\AssetServiceProvider;
 
 /**
  * Created by PhpStorm.
@@ -52,6 +53,15 @@ class Services {
         $app->register(new TwigServiceProvider(), array(
             'twig.path' => __DIR__.'/../resources/templates',
         ));
+
+        $app->register(new AssetServiceProvider(array(
+            'assets.version' => 'v1',
+            'assets.base_path' => __DIR__.'/../resources/assets',
+            'assets.named_packages' => array(
+                'css' => array('version' => 'css1', 'base_path' => __DIR__.'/../resources/assets/css'),
+                'js' => array('version' => 'js', 'base_path' => __DIR__.'/../resources/assets/js')
+            ),
+        )));
 
     }
 
