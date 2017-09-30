@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use App\services\ChatRepository;
 use App\services\UserRepository;
@@ -15,24 +16,69 @@ use App\services\UserRepository;
 class FrontController {
 
     protected $userRepo;
-
     protected $chatRepo;
+    protected $twig;
 
-    public function __construct(UserRepository $userRepository, ChatRepository $chatRepository) {
+    public function __construct(UserRepository $userRepository, ChatRepository $chatRepository, $twig) {
         $this->userRepo = $userRepository;
         $this->chatRepo = $chatRepository;
+        $this->twig = $twig;
     }
 
-    public function loginAction(Request $request) {
-        return 'Hello login';
+    public function loginAction(Application $app, Request $request) {
+        return $this->twig->render('loginPage.twig');
     }
 
-    public function dashboardAction($username, Request $request) {
-        return 'Hello dashboard, username: ' . $username;
+    public function dashboardAction($username, Application $app, Request $request) {
+
+        $user = $this->userRepo->getUser($username);
+
+        if ($user) {
+
+            $chats = $this->userRepo->getUserChats($user['id']);
+
+            return $this->twig->render('dashboardPage.twig', array(
+                'chats' => $chats
+            ));
+
+        } else {
+            return $this->twig->render('errorPage.twig', array(
+                'error_message' => "User '$username' does not exists"
+            ));
+        }
+
     }
 
-    public function chatAction($username, $chatId, Request $request) {
-        return 'Hello chat, username: ' . $username . ', chatId: ' . $chatId;
+    public function chatAction($username1, $username2, Request $request) {
+
+        $user1 = $this->userRepo->getUser($username1);
+        $user2 = $this->userRepo->getUser($username2);
+
+        if ($user1 && $user2) {
+
+            $chat = $this->chatRepo->getChatByUserIds($user1['id'], $user2['id']);
+
+            if ($chat) {
+
+                $messages = $this->chatRepo->getChatMessages($chat['id']);
+
+                foreach ($messages as $index => $message) {
+
+                    $messages[$index]['sent'] = $message['senderId'] == $user1['id'];
+
+                }
+
+                return $this->twig->render('chatPage.twig', array(
+                    'user2Username' => $user2['username'],
+                    'messages' => $messages
+                ));
+            }
+
+        }
+        return $this->twig->render('errorPage.twig', array(
+            'error_message' => "Invalid chat between user '$username1' and '$username2'"
+        ));
+
     }
 
 }

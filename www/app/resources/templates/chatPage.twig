@@ -1,0 +1,21 @@
+{% extends "layout.twig" %}
+
+{% block title %}Chat{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+
+    Chat with: {{ user2Username }}
+
+    {% for message in messages %}
+
+        text: {{ message.text }}
+        sentAt: {{ message.createdAt | date("m/d/Y") }}
+        sent: {{ message.sent }}
+
+    {% endfor %}
+{% endblock %}

@@ -8,6 +8,7 @@ use App\services\ChatRepository;
 use App\services\UserRepository;
 use Silex\Application;
 use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\TwigServiceProvider;
 
 /**
  * Created by PhpStorm.
@@ -36,7 +37,8 @@ class Services {
         $app['FrontController'] = function() use ($app) {
             return new FrontController(
                 $app['UserRepository'],
-                $app['ChatRepository']
+                $app['ChatRepository'],
+                $app['twig']
             );
         };
 
@@ -46,6 +48,10 @@ class Services {
                 $app['ChatRepository']
             );
         };
+
+        $app->register(new TwigServiceProvider(), array(
+            'twig.path' => __DIR__.'/../resources/templates',
+        ));
 
     }
 
