@@ -19,7 +19,7 @@ class Routing {
             ->bind('login_page');
         $app->get('/{username}/dashboard', "FrontController:dashboardAction")
             ->bind('dashboard_page');
-        $app->get('/{username}/chat/{chatId}', "FrontController:chatAction")
+        $app->get('/{username1}/chat/{username2}', "FrontController:chatAction")
             ->bind('chat_page');
 
         // api endpoints
