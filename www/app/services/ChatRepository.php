@@ -29,7 +29,6 @@ class ChatRepository {
 
         return $result;
 
-
     }
 
     public function createNewChat($user1Id, $user2Id) : bool {
@@ -51,7 +50,66 @@ class ChatRepository {
 
     }
 
-    public function getMessages($chatId) {
+    public function getChat($chatId) {
+
+        $stmt = $this->pdo->prepare("SELECT * FROM chat WHERE chat.id = :chatId");
+        if (!$stmt) {
+            return $this->pdo->errorInfo();
+        }
+        $stmt->bindParam('chatId', $chatId);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result;
+
+    }
+
+    public function getChatByUserIds($user1Id, $user2Id) {
+
+        $stmt = $this->pdo->prepare("SELECT * FROM chat WHERE (chat.user1Id = :user1Id AND chat.user2Id = :user2Id) OR (chat.user1Id = :user2Id AND chat.user2Id = :user1Id)");
+        if (!$stmt) {
+            return $this->pdo->errorInfo();
+        }
+        $stmt->bindParam('user1Id', $user1Id);
+        $stmt->bindParam('user2Id', $user2Id);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result;
+
+    }
+
+    public function createNewMessage($chatId, $senderId, $text) {
+
+        $now = (new \DateTime())->getTimestamp();
+
+        $stmt = $this->pdo->prepare("INSERT INTO message(chatId, senderId, text, createdAt) VALUES (:chatId, :senderId, :text, :now)");
+        if (!$stmt) {
+            return $this->pdo->errorInfo();
+        }
+        $stmt->bindParam('chatId', $chatId);
+        $stmt->bindParam('senderId', $senderId);
+        $stmt->bindParam('text', $text);
+        $stmt->bindParam('now', $now);
+        $stmt->execute();
+
+        $result = $stmt->rowCount() == 1;
+
+        return $result;
+
+    }
+
+    public function getChatMessages($chatId) {
+
+        $stmt = $this->pdo->prepare("SELECT * FROM message WHERE message.chatId = :chatId");
+        if (!$stmt) {
+            return $this->pdo->errorInfo();
+        }
+        $stmt->bindParam('chatId', $chatId);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
 
     }
 

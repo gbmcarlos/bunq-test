@@ -34,14 +34,18 @@ class Routing {
         // chat
         $app->get('/check_chat_exists/{username1}/{username2}', "ApiController:checkChatExists")
             ->bind('checkChatExists');
+
         $app->post('/{username1}/create_new_chat/{username2}', "ApiController:createNewChat")
             ->bind('createNewChat');
-        $app->get('/get_chat_messages/{chatId}', "ApiController:getChatMessages")
+
+        $app->post('/{username1}/create_new_message/{username2}', "ApiController:createNewMessage")
+            ->bind('createNewMessage');
+
+        $app->get('/{username1}/get_chat_messages/{username2}', "ApiController:getChatMessages")
             ->bind('getChatMessages');
+
         $app->get('/get_chat_messages_since/{chatId}/{lastMessageId}', "ApiController:getChatMessagesSince")
             ->bind('getChatMessagesSince');
-        $app->post('/{username1}/create_new_message/{chatId}', "ApiController:createNewChat")
-            ->bind('createNewChat');
 
     }
 

@@ -125,7 +125,57 @@ class ApiController {
 
     }
 
-    public function getChatMessages($chatId, Request $request) {
+    public function createNewMessage($username1, $username2, Request $request) {
+
+        try {
+
+            $user1 = $this->userRepo->getUser($username1);
+            $user2 = $this->userRepo->getUser($username2);
+
+            $chat = $this->chatRepo->getChatByUserIds($user1['id'], $user2['id']);
+
+            if ($chat) {
+
+                $result = $this->chatRepo->createNewMessage($chat['id'], $user1['id'], $request->request->get('text'));
+
+                return new JsonResponse($result);
+            }
+
+            return new JsonResponse(false);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
+
+    }
+
+    public function getChatMessages($username1, $username2, Request $request) {
+
+        try {
+
+            $user1 = $this->userRepo->getUser($username1);
+            $user2 = $this->userRepo->getUser($username2);
+
+            $chat = $this->chatRepo->getChatByUserIds($user1['id'], $user2['id']);
+
+            if ($chat) {
+
+                $result = $this->chatRepo->getChatMessages($chat['id']);
+
+                foreach ($result as $index => $message) {
+
+                    $result[$index]['sent'] = $message['senderId'] == $user1['id'];
+
+                }
+
+                return new JsonResponse($result);
+            }
+
+            return new JsonResponse(false);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
 
     }
 
