@@ -103,6 +103,26 @@ class ApiController {
 
     public function getUserChats($username, Request $request) {
 
+        try {
+
+            $user = $this->userRepo->getUser($username);
+
+            if ($user) {
+
+                $userChats = $this->userRepo->getUserChats($user['id']);
+
+                return new JsonResponse($userChats);
+
+            } else {
+
+                return new JsonResponse([]);
+
+            }
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
+
     }
 
     public function getChatMessages($chatId, Request $request) {
