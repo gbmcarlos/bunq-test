@@ -37,7 +37,8 @@ class Services {
         $app['FrontController'] = function() use ($app) {
             return new FrontController(
                 $app['UserRepository'],
-                $app['ChatRepository']
+                $app['ChatRepository'],
+                $app['twig']
             );
         };
 
