@@ -32,7 +32,9 @@ class Routing {
             ->bind('getUserChats');
 
         // chat
-        $app->post('/{username}/create_new_chat/{username2}', "ApiController:createNewChat")
+        $app->get('/check_chat_exists/{username1}/{username2}', "ApiController:checkChatExists")
+            ->bind('checkChatExists');
+        $app->post('/{username1}/create_new_chat/{username2}', "ApiController:createNewChat")
             ->bind('createNewChat');
         $app->get('/get_chat_messages/{chatId}', "ApiController:getChatMessages")
             ->bind('getChatMessages');

@@ -52,14 +52,40 @@ class ApiController {
 
     }
 
-    public function createNewChat($username, $username2, Request $request) {
+    public function checkChatExists($username1, $username2, Request $request) {
 
         try {
 
-            $user1 = $this->userRepo->getUser($username);
+            $user1 = $this->userRepo->getUser($username1);
             $user2 = $this->userRepo->getUser($username2);
 
             if ($user1 && $user2) {
+
+                $result = $this->chatRepo->checkChatExists($user1['id'], $user2['id']);
+
+                return new JsonResponse($result);
+
+            } else {
+                return new JsonResponse(false);
+            }
+
+
+        } catch (\Exception $e) {
+            return new JsonResponse(false);
+        }
+
+    }
+
+    public function createNewChat($username1, $username2, Request $request) {
+
+        try {
+
+            $user1 = $this->userRepo->getUser($username1);
+            $user2 = $this->userRepo->getUser($username2);
+
+            $chatExists = $this->chatRepo->checkChatExists($username1, $username2);
+
+            if ($user1 && $user2 && !$chatExists) {
 
                 $result = $this->chatRepo->createNewChat($user1['id'], $user2['id']);
 
