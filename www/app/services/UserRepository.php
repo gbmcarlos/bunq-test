@@ -59,9 +59,7 @@ class UserRepository {
             SELECT
                 chat.id as chatId,
                 user.username as user2Username,
-                chat.createdAt as createdAt,
-                m1.text,
-                m1.createdAt
+                chat.createdAt as createdAt
             FROM
                 user
                 INNER JOIN
