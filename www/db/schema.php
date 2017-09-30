@@ -21,6 +21,7 @@ return [
     'CREATE TABLE IF NOT EXISTS message (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         chatId REFERENCES chat(id),
+        senderId REFERENCES user(id)
         text STRING NOT NULL,
         createdAt INTEGER NOT NULL
     )'
