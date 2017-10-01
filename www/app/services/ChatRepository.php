@@ -18,14 +18,15 @@ class ChatRepository {
 
     public function checkChatExists($user1Id, $user2Id) :bool {
 
-        $stmt = $this->pdo->prepare("SELECT * FROM chat WHERE (user1Id = :user1Id AND user2Id = :user2Id) OR ((user1Id = :user2Id AND user2Id = :user1Id))");
+        $stmt = $this->pdo->prepare("SELECT * FROM chat as c WHERE (c.user1Id = :user1Id AND c.user2Id = :user2Id) OR (c.user1Id = :user2Id AND c.user2Id = :user1Id)");
         if (!$stmt) {
             return $this->pdo->errorInfo();
         }
         $stmt->bindParam('user1Id', $user1Id);
         $stmt->bindParam('user2Id', $user2Id);
         $stmt->execute();
-        $result = $stmt->rowCount() >= 1;
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result = count($result) >= 1;
 
         return $result;
 
