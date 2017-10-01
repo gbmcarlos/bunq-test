@@ -138,7 +138,10 @@ class ApiController {
 
                 $result = $this->chatRepo->createNewMessage($chat['id'], $user1['id'], $request->request->get('text'));
 
-                return new JsonResponse($result);
+                return new JsonResponse(array(
+                    'success' => true,
+                    'data' => $result
+                ));
             }
 
             return new JsonResponse(false);

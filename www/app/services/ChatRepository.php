@@ -94,7 +94,15 @@ class ChatRepository {
         $stmt->bindParam('now', $now);
         $stmt->execute();
 
-        $result = $stmt->rowCount() == 1;
+        $id = $this->pdo->lastInsertId();
+
+        $result = array(
+            'id' => $id,
+            'chatId' => $chatId,
+            'senderId' => $senderId,
+            'text' => $text,
+            'createdAt' => $now
+        );
 
         return $result;
 
