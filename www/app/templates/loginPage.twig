@@ -2,6 +2,7 @@
 
 {% block title %}Login{% endblock %}
 {% block jsAssets %}
+    {{ parent() }}
     <script type="application/javascript" src="{{ asset('assets/js/loginPage.js') }}"></script>
 {% endblock %}
 
