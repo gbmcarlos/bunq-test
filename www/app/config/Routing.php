@@ -26,18 +26,9 @@ class Routing {
         // user
         $app->post('/api/login/{username}', "ApiController:login")
             ->bind('login');
-        $app->get('/api/check_user_exists/{username}', "ApiController:checkUserExists")
-            ->bind('checkUserExists');
-        $app->post('/api/create_new_user', "ApiController:createNewUser")
-            ->bind('createNewUser');
-        $app->get('/api/get_user_chats/{username}', "ApiController:getUserChats")
-            ->bind('getUserChats');
 
         // chat
-        $app->get('/check_chat_exists/{username1}/{username2}', "ApiController:checkChatExists")
-            ->bind('checkChatExists');
-
-        $app->post('/{username1}/create_new_chat/{username2}', "ApiController:createNewChat")
+        $app->post('/api/{username1}/create_new_chat/{username2}', "ApiController:createNewChat")
             ->bind('createNewChat');
 
         $app->post('/{username1}/create_new_message/{username2}', "ApiController:createNewMessage")

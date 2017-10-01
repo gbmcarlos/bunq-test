@@ -62,34 +62,6 @@ class ApiController {
 
     }
 
-    public function checkUserExists($username, Request $request) {
-
-        try {
-
-            $userExists = $this->userRepo->checkUserExists($username);
-
-            return new JsonResponse($userExists);
-
-        } catch (\Exception $e) {
-            return new JsonResponse(false);
-        }
-
-    }
-
-    public function createNewUser(Request $request) {
-
-        try {
-
-            $result = $this->userRepo->createNewUser($request->request->all());
-
-            return new JsonResponse($result);
-
-        } catch (\Exception $e) {
-            return new JsonResponse(false);
-        }
-
-    }
-
     public function checkChatExists($username1, $username2, Request $request) {
 
         try {
@@ -116,50 +88,40 @@ class ApiController {
 
     public function createNewChat($username1, $username2, Request $request) {
 
-        try {
+        if ($username1 && $username2 && $username2 != $username1) {
 
-            $user1 = $this->userRepo->getUser($username1);
-            $user2 = $this->userRepo->getUser($username2);
+            try {
 
-            $chatExists = $this->chatRepo->checkChatExists($username1, $username2);
+                $user1 = $this->userRepo->getUser($username1);
+                $user2 = $this->userRepo->getUser($username2);
 
-            if ($user1 && $user2 && !$chatExists) {
+                $chatExists = $this->chatRepo->checkChatExists($user1['id'], $user2['id']);
 
-                $result = $this->chatRepo->createNewChat($user1['id'], $user2['id']);
+                if ($user1 && $user2) {
 
-                return new JsonResponse($result);
+                    if (!$chatExists) {
+                        $this->chatRepo->createNewChat($user1['id'], $user2['id']);
+                    }
 
-            } else {
-                return new JsonResponse(false);
-            }
+                    return new JsonResponse(array(
+                        'success' => true,
+                        'data' => array(
+                            'redirectUrl' => $this->urlGenerator->generate('chat_page', array(
+                                'username1' => $username1,
+                                'username2' => $username2
+                            ))
+                        )
+                    ));
 
-        } catch (\Exception $e) {
-            return new JsonResponse(false);
+                }
+
+            } catch (\Exception $e) {}
         }
 
-    }
-
-    public function getUserChats($username, Request $request) {
-
-        try {
-
-            $user = $this->userRepo->getUser($username);
-
-            if ($user) {
-
-                $userChats = $this->userRepo->getUserChats($user['id']);
-
-                return new JsonResponse($userChats);
-
-            } else {
-
-                return new JsonResponse([]);
-
-            }
-
-        } catch (\Exception $e) {
-            return new JsonResponse(false);
-        }
+        return new JsonResponse(array(
+            'success' => false,
+            'error' => "Invalid user's username"
+        ));
 
     }
 
