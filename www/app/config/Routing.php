@@ -24,11 +24,13 @@ class Routing {
 
         // api endpoints
         // user
-        $app->get('/check_user_exists/{username}', "ApiController:checkUserExists")
+        $app->post('/api/login/{username}', "ApiController:login")
+            ->bind('login');
+        $app->get('/api/check_user_exists/{username}', "ApiController:checkUserExists")
             ->bind('checkUserExists');
-        $app->post('/create_new_user', "ApiController:createNewUser")
+        $app->post('/api/create_new_user', "ApiController:createNewUser")
             ->bind('createNewUser');
-        $app->get('/get_user_chats/{username}', "ApiController:getUserChats")
+        $app->get('/api/get_user_chats/{username}', "ApiController:getUserChats")
             ->bind('getUserChats');
 
         // chat
