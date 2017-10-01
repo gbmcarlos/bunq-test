@@ -62,34 +62,6 @@ class ApiController {
 
     }
 
-    public function checkUserExists($username, Request $request) {
-
-        try {
-
-            $userExists = $this->userRepo->checkUserExists($username);
-
-            return new JsonResponse($userExists);
-
-        } catch (\Exception $e) {
-            return new JsonResponse(false);
-        }
-
-    }
-
-    public function createNewUser(Request $request) {
-
-        try {
-
-            $result = $this->userRepo->createNewUser($request->request->all());
-
-            return new JsonResponse($result);
-
-        } catch (\Exception $e) {
-            return new JsonResponse(false);
-        }
-
-    }
-
     public function checkChatExists($username1, $username2, Request $request) {
 
         try {
