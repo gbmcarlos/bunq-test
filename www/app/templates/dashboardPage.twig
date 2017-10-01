@@ -19,11 +19,6 @@
                             <p class="small">Created on {{ chat.createdAt | date("m/d/Y") }}</p>
                         </div>
 
-
-                        {#chat id: {{ chat.chatId }}#}
-                        {#user 2 username: {{ chat.user2Username }}#}
-                        {#sentAt: {{ chat.createdAt | date("m/d/Y") }}#}
-
                     {% endfor %}
 
                 </div>
@@ -40,11 +35,15 @@
                         <label for="usernameInput">Existing user's username</label>
                         <input type="text" class="form-control" id="usernameInput">
                     </div>
-                    <input type="button" class="btn btn-default" id="newChatButton" value="New chat">
+                    <input type="button" class="btn btn-default" id="newChatButton" data-username1="{{ username }}" value="New chat">
 
                 </div>
             </div>
         </div>
     </div>
 
+{% endblock %}
+
+{% block footerAssets %}
+    <script type="application/javascript" src="{{ asset('assets/js/dashboardPage.js') }}"></script>
 {% endblock %}
