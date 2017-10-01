@@ -3,11 +3,48 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    {% for chat in chats %}
 
-        chat id: {{ chat.chatId }}
-        user 2 username: {{ chat.user2Username }}
-        sentAt: {{ chat.createdAt | date("m/d/Y") }}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dashboard</h3>
+                </div>
+                <div class="panel-body">
 
-    {% endfor %}
+                    {% for chat in chats %}
+
+                        <div class="well">
+                            Chat with <b>{{ chat.user2Username }}</b>. <a href="{{ url('chat_page', {'username1': username, 'username2': chat.user2Username}) }}">Open</a>
+                            <p class="small">Created on {{ chat.createdAt | date("m/d/Y") }}</p>
+                        </div>
+
+
+                        {#chat id: {{ chat.chatId }}#}
+                        {#user 2 username: {{ chat.user2Username }}#}
+                        {#sentAt: {{ chat.createdAt | date("m/d/Y") }}#}
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    New chat
+                </div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label for="usernameInput">Existing user's username</label>
+                        <input type="text" class="form-control" id="usernameInput">
+                    </div>
+                    <input type="button" class="btn btn-default" id="newChatButton" value="New chat">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

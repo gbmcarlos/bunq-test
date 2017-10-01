@@ -38,6 +38,7 @@ class FrontController {
             $chats = $this->userRepo->getUserChats($user['id']);
 
             return $this->twig->render('dashboardPage.twig', array(
+                'username' => $username,
                 'chats' => $chats
             ));
 
