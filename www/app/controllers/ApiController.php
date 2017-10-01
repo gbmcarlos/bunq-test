@@ -12,16 +12,54 @@ use App\services\ChatRepository;
 use App\services\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class ApiController {
 
     protected $userRepo;
-
     protected $chatRepo;
+    protected $urlGenerator;
 
-    public function __construct(UserRepository $userRepository, ChatRepository $chatRepository) {
+    public function __construct(UserRepository $userRepository, ChatRepository $chatRepository, UrlGenerator $urlGenerator) {
         $this->userRepo = $userRepository;
         $this->chatRepo = $chatRepository;
+        $this->urlGenerator = $urlGenerator;
+    }
+
+    public function login($username, Request $request) {
+
+        $validUsername = $this->validateUsername($username);
+
+        if ($validUsername) {
+
+            $userExists = $this->userRepo->checkUserExists($username);
+
+            if (!$userExists) {
+                $this->userRepo->createNewUser(array(
+                    'username' => $username
+                ));
+            }
+
+            return new JsonResponse(array(
+                'success' => true,
+                'data' => array(
+                    'redirectUrl' => $this->urlGenerator->generate('dashboard_page', array('username' => $username))
+                )
+            ));
+
+        } else {
+            return new JsonResponse(array(
+                'success' => false,
+                'error' => "Invalid username '$username'"
+            ));
+        }
+
+    }
+
+    protected function validateUsername($username) : bool {
+
+        return !empty($username);
+
     }
 
     public function checkUserExists($username, Request $request) {
