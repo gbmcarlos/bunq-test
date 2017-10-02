@@ -34,10 +34,7 @@ class Routing {
         $app->post('/api/{username1}/create_new_message/{username2}', "ApiController:createNewMessage")
             ->bind('createNewMessage');
 
-        $app->get('/{username1}/get_chat_messages/{username2}', "ApiController:getChatMessages")
-            ->bind('getChatMessages');
-
-        $app->get('/get_chat_messages_since/{chatId}/{lastMessageId}', "ApiController:getChatMessagesSince")
+        $app->get('/api/{username1}/get_chat_messages_since/{username2}/{lastMessageId}', "ApiController:getChatMessagesSince")
             ->bind('getChatMessagesSince');
 
     }
