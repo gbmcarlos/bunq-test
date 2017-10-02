@@ -74,6 +74,7 @@ In this page the user will see the username of the other user, and all the messa
     * Create new user with username
     * Retrieve list of existing chats for a user, each with the last message
     * Retrieve list of messages for a chat
+    * Retrieve list of messages for a chat since last messages
     * Send new message
 * Implement templates
     * Login: form with text box and submit button
