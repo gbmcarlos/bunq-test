@@ -19,10 +19,17 @@ var ChatController = {
         this.setEvents();
         this.username1 = this.elements.submitButton.attr('data-username1');
         this.username2 = this.elements.submitButton.attr('data-username2');
+        this.setAutoRefresh();
     },
 
     setEvents: function() {
         this.elements.submitButton.on('click', this.onSubmitClick.bind(this));
+    },
+
+    setAutoRefresh: function() {
+
+        this.autoRefresh = setInterval(this.loadLastMessages.bind(this), 1000*10);
+
     },
 
     onSubmitClick: function() {
@@ -68,7 +75,7 @@ var ChatController = {
 
         if (response.success) {
 
-            this.insertNewMessage(response.data);
+            this.insertNewMessage(response.data, true);
 
             this.elements.messageInput.prop('disabled', false);
             this.elements.submitButton.prop('disabled', false);
@@ -82,15 +89,47 @@ var ChatController = {
 
     },
 
-    insertNewMessage: function(message) {
+    insertNewMessage: function(message, async) {
 
         message.createdAt = this.formatMessageDate(message.createdAt);
+
+        message.async = async;
 
         var template = this.elements.sentMessageTemplate.text();
 
         var result = this.parseTemplate(template, message);
 
         this.elements.messagesList.append($(result));
+
+    },
+
+    loadLastMessages: function() {
+
+        var lastMessage = this.elements.messagesList.children(":not([data-async='true'])").last(); // load the last message that has not been sent asynchronously
+
+        var lastId = lastMessage.attr('data-id');
+
+        $.get(
+            '/api/' + this.username1 + '/get_chat_messages_since/' + this.username2 + '/' + lastId,
+            null,
+            function(response){
+                if (response.success && response.data.length) {
+                    this.loadLastMessageCallback(response.data, lastId);
+                }
+            }.bind(this)
+        );
+
+    },
+
+    loadLastMessageCallback: function(messages, lastId) {
+
+        var asyncSentMessages = this.elements.messagesList.children("[data-id=" + lastId + "]").nextAll();
+
+        asyncSentMessages.remove();
+
+        for (var i = 0; i < messages.length; i++) {
+            this.insertNewMessage(messages[i], false);
+        }
 
     },
 
