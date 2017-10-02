@@ -182,7 +182,36 @@ class ApiController {
 
     }
 
-    public function getChatMessagesSince($chatId, $lastMessageId, Request $request) {
+    public function getChatMessagesSince($username1, $username2, $lastMessageId, Request $request) {
+
+        try {
+
+            $user1 = $this->userRepo->getUser($username1);
+            $user2 = $this->userRepo->getUser($username2);
+
+            $chat = $this->chatRepo->getChatByUserIds($user1['id'], $user2['id']);
+
+            if ($chat) {
+
+                $result = $this->chatRepo->getChatMessagesSince($chat['id'], $lastMessageId);
+
+                foreach ($result as $index => $message) {
+
+                    $result[$index]['sent'] = $message['senderId'] == $user1['id'];
+
+                }
+
+                return new JsonResponse(array(
+                    'success' => true,
+                    'data' => $result
+                ));
+            }
+
+        } catch (\Exception $e) {}
+
+        return new JsonResponse(array(
+            'success' => false
+        ));
 
     }
 
