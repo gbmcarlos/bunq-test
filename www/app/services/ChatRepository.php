@@ -122,11 +122,18 @@ class ChatRepository {
 
     }
 
-    public function getMessagesSince($chatId, $lastMessageId) {
+    public function getChatMessagesSince($chatId, $lastMessageId) {
 
-    }
+        $stmt = $this->pdo->prepare("SELECT * FROM message WHERE message.chatId = :chatId AND id > :lastMessageId");
+        if (!$stmt) {
+            return $this->pdo->errorInfo();
+        }
+        $stmt->bindParam('chatId', $chatId);
+        $stmt->bindParam('lastMessageId', $lastMessageId);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-    public function saveNewMessage($chatId, $text) {
+        return $result;
 
     }
 
