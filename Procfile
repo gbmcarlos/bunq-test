@@ -1,0 +1,1 @@
+web: sh ./deploy $APP_ENV $PORT
