@@ -24,6 +24,6 @@ RUN a2dissite 000-default && a2ensite main
 RUN service apache2 restart
 
 # Run apache
-ADD ./deployconfig/apache/run.sh  /run.sh
+ADD ./deploy/config/apache/run.sh  /run.sh
 RUN chmod 777 /run.sh
 CMD ["/run.sh"]
