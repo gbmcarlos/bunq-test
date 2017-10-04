@@ -107,7 +107,7 @@ var ChatController = {
 
         var lastMessage = this.elements.messagesList.children(":not([data-async='true'])").last(); // load the last message that has not been sent asynchronously
 
-        var lastId = lastMessage.attr('data-id');
+        var lastId = lastMessage.attr('data-id') || 0;
 
         $.get(
             '/api/' + this.username1 + '/get_chat_messages_since/' + this.username2 + '/' + lastId,
