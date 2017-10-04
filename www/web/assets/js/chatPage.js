@@ -19,6 +19,7 @@ var ChatController = {
         this.setEvents();
         this.username1 = this.elements.submitButton.attr('data-username1');
         this.username2 = this.elements.submitButton.attr('data-username2');
+        this.userId = this.elements.submitButton.attr('data-userid');
         this.setAutoRefresh();
     },
 
@@ -95,7 +96,9 @@ var ChatController = {
 
         message.async = async;
 
-        var template = this.elements.sentMessageTemplate.text();
+        var sent = message.senderId == this.userId
+
+        var template = sent ? this.elements.sentMessageTemplate.text() : this.elements.receivedMessageTemplate.text();
 
         var result = this.parseTemplate(template, message);
 
@@ -114,14 +117,14 @@ var ChatController = {
             null,
             function(response){
                 if (response.success && response.data.length) {
-                    this.loadLastMessageCallback(response.data, lastId);
+                    this.loadLastMessagesCallback(response.data, lastId);
                 }
             }.bind(this)
         );
 
     },
 
-    loadLastMessageCallback: function(messages, lastId) {
+    loadLastMessagesCallback: function(messages, lastId) {
 
         var asyncSentMessages = this.elements.messagesList.children("[data-id=" + lastId + "]").nextAll();
 
