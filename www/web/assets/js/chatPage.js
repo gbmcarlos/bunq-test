@@ -96,7 +96,7 @@ var ChatController = {
 
         message.async = async;
 
-        var sent = message.senderId == this.userId
+        var sent = message.senderId == this.userId;
 
         var template = sent ? this.elements.sentMessageTemplate.text() : this.elements.receivedMessageTemplate.text();
 
