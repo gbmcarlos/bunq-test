@@ -14,7 +14,7 @@ and visit `http://[docker ip]:[port]/` for testing the application.
 
 OR
 
-run `./deploy/up.sh`. This will run the application locally, with debug on port 80 and tail the logs
+run `./deploy/up.sh`. This will build and run the application locally, with debug on port 80 and tail the logs
 
 ## Assignment
 *Write a very simple 'chat' application backend in PHP. A user should be able to send a simple text
