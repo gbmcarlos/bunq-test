@@ -8,12 +8,13 @@ RUN    apt-get update \
         libapache2-mod-macro \
     && rm -rf /var/lib/apt/lists/*
 
+ADD ./www /var/www/html/www
 WORKDIR /var/www/html
 
 # Configure Apahce
 ## Virtual host
 #ADD ./deploy/config/apache/vhost.macro /etc/apache2/conf.d/vhost.macro
-ADD ./deploy/config/apache/main.conf /etc/apache2/sites-available/main.conf
+ADD ./config/apache/main.conf /etc/apache2/sites-available/main.conf
 
 ## Enable rewrite module
 RUN a2enmod rewrite macro
@@ -24,7 +25,7 @@ RUN sed -i 's/^Listen 80/#Listen80/' /etc/apache2/ports.conf
 #RUN service apache2 restart
 
 # Run apache
-ADD ./deploy/config/apache/run.sh  /run.sh
+ADD ./config/apache/run.sh  /run.sh
 RUN chmod 777 /run.sh
 USER www-data
 CMD ["/run.sh"]
