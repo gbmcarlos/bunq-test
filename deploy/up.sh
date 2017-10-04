@@ -13,6 +13,7 @@ echo ">>>> Removing old container"
 docker rm -f chat_app || true
 
 echo ">>>> Running new container"
-docker run --name chat_app -e APP_ENV=local -e SQLITEDB_FILE=/var/www/html/phpsqlte.db -e APP_DEBUG=TRUE -d -p $2:80 -v $PWD/../www:/var/www/html chat_app:latest
+docker run --name chat_app -e APP_ENV=local -e SQLITEDB_FILE=/var/www/html/phpsqlte.db -e APP_DEBUG=TRUE -d -p 80:80 -v $PWD/../www:/var/www/html chat_app:latest
 
 echo ">>>> Tailing logs"
+docker logs -f chat_app
