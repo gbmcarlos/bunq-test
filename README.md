@@ -2,17 +2,19 @@
 
 ## Installation
 
-Run the commands below to install this project.
+Install dependencies with `composer install`.
 
-*Note: You need docker to install the project locally.*
+Build the Docker image (first time) with `docker build -t chat_app:latest [project's root directory]`.
 
-```
-$ SQLITEDB_FILE=[db file] ./deploy/up.sh local [port] && docker logs -f chat_app
-```
+Run the Docker container with `docker run --name chat_app -e APP_ENV=[env] -e SQLITEDB_FILE=[db_file] -e APP_DEBUG=[debug] -d -p [port]:80 -v [project's root directory]/www:/var/www/html chat_app:latest`.
 
-*Note: PHP will need premissions to access [db file], e.g. /var/tmp/[file name]*
+*Note: PHP will need premissions to access the file specified in `SQLITEDB_FILE`
 
-and visit ```http://[docker ip]:[port]/``` for testing the application.
+and visit `http://[docker ip]:[port]/` for testing the application.
+
+OR
+
+run `./deploy/up.sh`. This will run the application locally, with debug on port 80 and tail the logs
 
 ## Assignment
 *Write a very simple 'chat' application backend in PHP. A user should be able to send a simple text
