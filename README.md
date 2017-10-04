@@ -1,4 +1,5 @@
 # Bunq Back End Engineer assignment
+[chat.gbmcarlos.com](http://chat.gbmcarlos.com)
 
 ## Installation
 
