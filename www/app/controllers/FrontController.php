@@ -70,6 +70,7 @@ class FrontController {
                 }
 
                 return $this->twig->render('chatPage.twig', array(
+                    'userId' => $user1['id'],
                     'username1' => $username1,
                     'username2' => $username2,
                     'messages' => $messages
