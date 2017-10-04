@@ -12,7 +12,7 @@ WORKDIR /var/www/html
 
 # Configure Apahce
 ## Virtual host
-ADD config/apache/main.conf /etc/apache2/sites-available/main.conf
+ADD ./deploy/config/apache/main.conf /etc/apache2/sites-available/main.conf
 ## Apache user
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
