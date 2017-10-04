@@ -126,7 +126,7 @@ var ChatController = {
 
     loadLastMessagesCallback: function(messages, lastId) {
 
-        var asyncSentMessages = this.elements.messagesList.children("[data-id=" + lastId + "]").nextAll();
+        var asyncSentMessages = lastId ? this.elements.messagesList.children("[data-id=" + lastId + "]").nextAll() : this.elements.messagesList.children();
 
         asyncSentMessages.remove();
 
