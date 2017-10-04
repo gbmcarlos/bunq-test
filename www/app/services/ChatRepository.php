@@ -20,7 +20,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("SELECT * FROM chat as c WHERE (c.user1Id = :user1Id AND c.user2Id = :user2Id) OR (c.user1Id = :user2Id AND c.user2Id = :user1Id)");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('user1Id', $user1Id);
         $stmt->bindParam('user2Id', $user2Id);
@@ -38,7 +38,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("INSERT INTO chat(user1Id, user2Id, createdAt) VALUES (:user1Id, :user2Id, :now)");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('user1Id', $user1Id);
         $stmt->bindParam('user2Id', $user2Id);
@@ -55,7 +55,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("SELECT * FROM chat WHERE chat.id = :chatId");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('chatId', $chatId);
         $stmt->execute();
@@ -69,7 +69,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("SELECT * FROM chat WHERE (chat.user1Id = :user1Id AND chat.user2Id = :user2Id) OR (chat.user1Id = :user2Id AND chat.user2Id = :user1Id)");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('user1Id', $user1Id);
         $stmt->bindParam('user2Id', $user2Id);
@@ -86,7 +86,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("INSERT INTO message(chatId, senderId, text, createdAt) VALUES (:chatId, :senderId, :text, :now)");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('chatId', $chatId);
         $stmt->bindParam('senderId', $senderId);
@@ -112,7 +112,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("SELECT * FROM message WHERE message.chatId = :chatId");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('chatId', $chatId);
         $stmt->execute();
@@ -126,7 +126,7 @@ class ChatRepository {
 
         $stmt = $this->pdo->prepare("SELECT * FROM message WHERE message.chatId = :chatId AND id > :lastMessageId");
         if (!$stmt) {
-            return $this->pdo->errorInfo();
+            throw new \Exception($this->pdo->errorInfo());
         }
         $stmt->bindParam('chatId', $chatId);
         $stmt->bindParam('lastMessageId', $lastMessageId);
