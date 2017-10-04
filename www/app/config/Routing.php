@@ -15,6 +15,9 @@ class Routing {
     public static function registerRoutes(Application $app) {
 
         // front pages
+        $app->get('/', function() use ($app) {
+            return $app->redirect('/login');
+        })->bind('home_page');
         $app->get('/login', "FrontController:loginAction")
             ->bind('login_page');
         $app->get('/{username}/dashboard', "FrontController:dashboardAction")

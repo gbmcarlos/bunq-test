@@ -5,25 +5,26 @@ RUN    apt-get update \
     && apt-get -yq install \
         curl \
         php5-curl \
+        libapache2-mod-macro \
     && rm -rf /var/lib/apt/lists/*
-
 
 WORKDIR /var/www/html
 
 # Configure Apahce
 ## Virtual host
-ADD config/apache/main.conf /etc/apache2/sites-available/main.conf
-## Apache user
-RUN usermod -u 1000 www-data
-RUN usermod -G staff www-data
+#ADD ./deploy/config/apache/vhost.macro /etc/apache2/conf.d/vhost.macro
+ADD ./deploy/config/apache/main.conf /etc/apache2/sites-available/main.conf
+
 ## Enable rewrite module
-RUN a2enmod rewrite
+RUN a2enmod rewrite macro
 ## Enable our site
 RUN a2dissite 000-default && a2ensite main
-## Always reload the configuration
-RUN service apache2 restart
+
+RUN sed -i 's/^Listen 80/#Listen80/' /etc/apache2/ports.conf
+#RUN service apache2 restart
 
 # Run apache
-ADD config/apache/run.sh  /run.sh
+ADD ./deploy/config/apache/run.sh  /run.sh
 RUN chmod 777 /run.sh
+USER www-data
 CMD ["/run.sh"]
