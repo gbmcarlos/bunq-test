@@ -8,7 +8,23 @@ RUN    apt-get update \
         libapache2-mod-macro \
     && rm -rf /var/lib/apt/lists/*
 
-ADD ./www /var/www/html/www
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+
+# Copy composer json and lock
+COPY ./www/composer.json /var/www/html/www/composer.json
+COPY ./www/composer.lock /var/www/html/www/composer.json
+
+# Now install the dependences
+RUN composer install --no-scripts --no-autoloader --working-dir=/var/www/html/www
+
+# Now copy de application's source code
+COPY ./www /var/www/html
+
+# And now dump the autoload
+RUN composer dump-autoload --optimize
+
 WORKDIR /var/www/html
 
 # Configure Apahce
