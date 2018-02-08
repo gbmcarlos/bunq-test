@@ -3,8 +3,6 @@ FROM php:7.0-apache
 # Install Apache PHP mod and its dependencies (including Apache and PHP!)
 RUN    apt-get update \
     && apt-get -yq install \
-        curl \
-        php7.0-curl \
         libapache2-mod-macro \
     && rm -rf /var/lib/apt/lists/*
 
