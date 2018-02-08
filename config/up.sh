@@ -14,6 +14,3 @@ docker rm -f chat_app || true
 
 echo ">>>> Running new container"
 docker run --name chat_app -e APP_ENV=local -e SQLITEDB_FILE=/var/www/html/phpsqlte.db -e APP_DEBUG=TRUE -e PORT=$PORT -d -p 80:$PORT -v $PWD/../www:/var/www/html chat_app:latest
-
-echo ">>>> Tailing logs"
-docker logs -f chat_app
