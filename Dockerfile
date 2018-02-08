@@ -4,7 +4,7 @@ FROM php:7.0-apache
 RUN    apt-get update \
     && apt-get -yq install \
         curl \
-        php5-curl \
+        php-curl \
         libapache2-mod-macro \
     && rm -rf /var/lib/apt/lists/*
 
